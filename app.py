@@ -159,6 +159,24 @@ def ensure_responses_file() -> None:
             ]
         ).to_csv(RESPONSES_PATH, index=False, encoding="utf-8-sig")
 
+        def clear_responses_file() -> None:
+            pd.DataFrame(
+                columns=[
+                    "timestamp",
+                    "participant_id",
+                    "trial_no",
+                    "item_id",
+                    "scenario",
+                    "text",
+                    "true_source",
+                    "participant_choice",
+                    "correct",
+                    "confidence",
+                    "warmth_rating",
+                    "rt_ms",
+                ]
+            ).to_csv(RESPONSES_PATH, index=False, encoding="utf-8-sig")
+
 
 def load_stimuli() -> pd.DataFrame:
     if STIMULI_PATH.exists():
@@ -356,6 +374,14 @@ with st.sidebar:
     if st.button("重置我的作答进度"):
         reset_experiment()
         st.rerun()
+
+        if admin_mode:
+            if st.button("清空测试数据"):
+                clear_responses_file()
+                summarize_data.clear()
+                reset_experiment()
+                st.success("测试数据已清空。")
+                st.rerun()
 
     if admin_mode:
         st.markdown("---")
