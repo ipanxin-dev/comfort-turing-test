@@ -375,13 +375,13 @@ with st.sidebar:
         reset_experiment()
         st.rerun()
 
-        if admin_mode:
-            if st.button("清空测试数据"):
-                clear_responses_file()
-                summarize_data.clear()
-                reset_experiment()
-                st.success("测试数据已清空。")
-                st.rerun()
+    if admin_mode:
+        if st.button("清空测试数据"):
+            clear_responses_file()
+            summarize_data.clear()
+            reset_experiment()
+            st.success("测试数据已清空。")
+            st.rerun()
 
     if admin_mode:
         st.markdown("---")
